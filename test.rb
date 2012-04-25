@@ -1,11 +1,17 @@
 require 'csv'
+require 'time'
 
 def print_to_csv
-	csv_out = CSV::Writer.generate(File.open('new.csv', 'wb'))
+	#wb override csv
+	#a+ append to csv
+	#date,technology,amazonbooks
+	csv_out = CSV::Writer.generate(File.open('new.csv', 'a'))
+	#csv_out << ["date", "technology", "amazonbooks"]
 
-	csv_out << ["Kop1", "Kop2"]
-	csv_out << ["Waarde1", "Waarde2"]
-	csv_out << ["Waarde11", "Waarde22"]
+	t = Time.now
+	date = "#{t.day}/#{t.month}/#{t.year}"
+
+	csv_out << [date, "PHP", "1337"]
 
 	puts "--CSV Saved--"
 
@@ -18,5 +24,5 @@ def read_csv
 	puts "--Done--"
 end
 
-#print_to_csv
-read_csv
+print_to_csv
+#read_csv
