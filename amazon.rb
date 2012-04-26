@@ -38,7 +38,9 @@ ecs.amazonaws.com
 	doc = REXML::Document.new(xml_data)
 	book_amount = doc.root.elements["Items/TotalResults]"].text
 
+	return book_amount
 
+=begin
 	# Save to CSV
 	csv_out = CSV::Writer.generate(File.open('new.csv', 'a'))
 
@@ -47,6 +49,7 @@ ecs.amazonaws.com
 	csv_out << [date, tech_name, book_amount]
 
 	puts "--CSV Saved--"
+=end
 end
 
-get_book_amount(ARGV[0])
+#get_book_amount(ARGV[0])

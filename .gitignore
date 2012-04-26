@@ -3,3 +3,6 @@ variables.rb
 
 # Retrieved data
 new.csv
+
+technologies.csv
+tech_metrics.csv
