@@ -67,7 +67,7 @@ class SocialmentionAPI
 			end
 		end
 		#puts url
-		puts "ratio: #{ratio} positive: #{positive} neutral: #{neutral} negative: #{negative}"
+		#puts "ratio: #{ratio} positive: #{positive} neutral: #{neutral} negative: #{negative}"
 
 		#end_time = Time.now
 		#puts "Time elapsed #{(end_time - beginning_time)} seconds"
