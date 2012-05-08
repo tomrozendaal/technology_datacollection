@@ -1,0 +1,6 @@
+date,technology,amazon_books,people_amount,job_amount,positive_ratio,learning_materials,answered_percentage
+5/2012,php,1648,139737,765,1,8810,85
+5/2012,java,3348,338363,3509,6,11100,85
+5/2012,ruby,156,30130,696,1,841,86
+5/2012,objective-c,63,23689,319,-2,462,83
+5/2012,c++,1910,287342,3506,-4,3660,93

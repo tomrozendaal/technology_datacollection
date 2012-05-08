@@ -25,7 +25,7 @@ class SocialmentionAPI
 			keywords = @tech_name
 		end
 
-		url = "http://api2.socialmention.com/search?q=#{CGI.escape(keywords)}&f=json&sentiment=true&src[]=twitter"
+		url = "http://api2.socialmention.com/search?q=#{CGI.escape(keywords)}&f=json&sentiment=true&src[]=twitter&src[]=delicious&src[]=stumbleupon&lang=en"
 
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = resp.body
@@ -75,4 +75,5 @@ class SocialmentionAPI
 		return ratio
 	end
 end
+
 

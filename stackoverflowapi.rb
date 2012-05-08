@@ -48,6 +48,3 @@ class StackoverflowAPI
 		return answered_percentage.round
 	end
 end
-
-test = StackoverflowAPI.new("java")
-test.get_percentage_answered()

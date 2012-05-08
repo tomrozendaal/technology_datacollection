@@ -29,5 +29,3 @@ class GoogleSearchAPI
 
 end
 
-test = GoogleSearchAPI.new("PHP")
-puts test.get_search_results()

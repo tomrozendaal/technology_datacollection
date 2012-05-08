@@ -5,7 +5,7 @@ def print_to_csv
 	#wb override csv
 	#a+ append to csv
 	#date,technology,amazonbooks
-	csv_out = CSV::Writer.generate(File.open('new.csv', 'a'))
+	csv_out = CSV::Writer.generate(File.open('new.csv', 'w'))
 	#csv_out << ["date", "technology", "amazonbooks"]
 
 	t = Time.now
