@@ -11,7 +11,7 @@ require 'variables.rb'
 
 class AmazonAPI
 	def initialize(tech_name)
-		@tech_name = tech_name
+		@tech_name = CGI.escape(tech_name)
     end 
 
 	def get_book_amount()

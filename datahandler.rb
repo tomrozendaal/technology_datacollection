@@ -26,18 +26,24 @@ class Datahandler
 	end
 
 	def fetch_metrics_data()
-		headers = ["date", "technology", "amazon_books", "people_amount", "job_amount", "positive_ratio", "learning_materials", "answered_percentage"]
+		headers = ["date", "technology", "category", "parent", "amazon_books", "people_amount", "job_amount", "positive_ratio", "learning_materials", "answered_percentage"]
 		history = CSV::Writer.generate(File.open("history_metrics_data.csv", 'a'))
-		#history << headers
+		history << headers #//
 
 		latest = CSV::Writer.generate(File.open("latest_metrics_data.csv", 'w'))
 		latest << headers
 
-		CSV.foreach("technologies.csv") do |row|
+		FasterCSV.foreach('technologies.csv', :headers => true) do |csv_obj|
+			row = csv_obj['technology']
+			category =  csv_obj['category']
+			parent = csv_obj['parent']
+			#puts row
+
 			# Amazon API
 			amazon = AmazonAPI.new(row)
 			book_amount = amazon.get_book_amount()
 			puts "#{row} books: #{book_amount}"
+
 
 			# LinkedIn API
 			linkedin = LinkedinAPI.new(row)
@@ -65,9 +71,10 @@ class Datahandler
 			date = "#{t.month}/#{t.year}"
 
 			# Save to CSV
-			fields = [date,row,book_amount, people_amount, job_amount, positive_ratio, learning_materials, answered_percentage]
+			fields = [date, row, category, parent, book_amount, people_amount, job_amount, positive_ratio, learning_materials, answered_percentage]
 			history << fields
 			latest << fields
+
 		end
 		puts "--DONE--"
 	end
@@ -108,10 +115,10 @@ class Datahandler
 			sentiment_average = -sentiment_average
 		end
 
-		headers = ["date", "technology", "adoption", "knowledge", "sentiment", "total"]
+		headers = ["date", "technology", "category", "parent", "adoption", "knowledge", "sentiment", "total"]
 
 		history = CSV::Writer.generate(File.open("history_aspect_data.csv", 'a'))
-		#history << headers
+		#history << headers #//
 		latest = CSV::Writer.generate(File.open("latest_aspect_data.csv", 'w'))
 		latest << headers
 
@@ -142,7 +149,7 @@ class Datahandler
 			total = adoption_rating + knowledge_rating + sentiment_rating
 
 			# Save to CSV
-			fields = [date,csv_obj['technology'],adoption_rating.to_i, knowledge_rating.to_i, sentiment_rating.to_i, total.to_i]
+			fields = [date, csv_obj['technology'], csv_obj['category'], csv_obj['parent'], adoption_rating.to_i, knowledge_rating.to_i, sentiment_rating.to_i, total.to_i]
 			history << fields
 			latest << fields
 		end	
