@@ -11,7 +11,11 @@ require 'variables.rb'
 
 class AmazonAPI
 	def initialize(tech_name)
-		@tech_name = CGI.escape(tech_name)
+		if tech_name == 'c++'
+			@tech_name = tech_name
+		else
+			@tech_name = CGI.escape(tech_name)
+		end
     end 
 
 	def get_book_amount()
