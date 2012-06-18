@@ -7,6 +7,7 @@ adwords = AdwordsApi::Api.new({
   :authentication => {
      :method => 'ClientLogin',
      :developer_token => 'NpCd1JMpodtF9e-O5r7BAA',
+     #:developer_token => 'info@tomrozendaal.nl++USD',
      :user_agent => 'Ruby Sample',
      :password => 'wachtwoord',
      :email => 'info@tomrozendaal.nl',

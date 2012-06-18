@@ -7,6 +7,7 @@ require 'linkedinapi.rb'
 require 'socialmentionapi.rb'
 require 'googlesearchapi.rb'
 require 'stackoverflowapi.rb'
+require 'ohlohapi.rb'
 
 
 class Datahandler
@@ -26,8 +27,8 @@ class Datahandler
 
 		@categories = ['pl','wf','cms']
 
-		@metrics_headers = ["date", "technology", "category", "parent", "amazon_books", "people_amount", "job_amount", "positive_ratio", "learning_materials", "answered_percentage"]
-		@aspect_headers = ["date", "technology", "category", "parent", "adoption", "knowledge", "sentiment", "total"]		
+		@metrics_headers = ["date", "technology", "category", "parent", "amazon_books", "people_amount", "job_amount", "positive_ratio", "learning_materials", "answered_percentage", "age", "description", "logo", "latest_commits", "newsworthiness"]
+		@aspect_headers = ["date", "technology", "category", "parent", "adoption", "knowledge", "sentiment", "newsworthiness", "total"]		
 	end
 
 	def fetch_metrics_data()
@@ -63,19 +64,28 @@ class Datahandler
 
 			# Google Search API
 			googlesearch = GoogleSearchAPI.new(row)
-			learning_materials = googlesearch.get_search_results()
+			learning_materials = googlesearch.get_learningmaterial_results()
+			newsworthiness = googlesearch.get_newsworthiness_results()
 			puts "#{row} learning_materials: #{learning_materials}"
 
 			# Stackoverflow API
 			stackoverflow = StackoverflowAPI.new(row)
 			answered_percentage = stackoverflow.get_percentage_answered()
 
+			# Ohloh API
+			ohloh = OhlohAPI.new(row)
+			age = ohloh.get_age()
+			desc = ohloh.get_description()
+			logo = ohloh.get_logo()
+			latest_commits = ohloh.get_latest_commits()
+			puts "#{row} age: #{age}"
+
 			# Currrent date
 			t = Time.now
 			date = "#{t.month}/#{t.year}"
 
 			# Save to CSV
-			fields = [date, row, category, parent, book_amount, people_amount, job_amount, positive_ratio, learning_materials, answered_percentage]
+			fields = [date, row, category, parent, book_amount, people_amount, job_amount, positive_ratio, learning_materials, answered_percentage, age, desc, logo, latest_commits, newsworthiness]
 			history << fields
 			latest << fields
 
@@ -159,7 +169,7 @@ class Datahandler
 			total = adoption_rating + knowledge_rating + sentiment_rating
 
 			# Save to CSV
-			fields = [date, csv_obj['technology'], csv_obj['category'], csv_obj['parent'], adoption_rating.to_i, knowledge_rating.to_i, sentiment_rating.to_i, total.to_i]
+			fields = [date, csv_obj['technology'], csv_obj['category'], csv_obj['parent'], adoption_rating.to_i, knowledge_rating.to_i, sentiment_rating.to_i, "newsworthiness", total.to_i]
 			history << fields
 			latest << fields
 		end	
@@ -238,7 +248,7 @@ class Datahandler
 				total = adoption_rating + knowledge_rating + sentiment_rating
 
 				# Save to CSV
-				fields = [date, csv_obj['technology'], csv_obj['category'], csv_obj['parent'], adoption_rating.to_i, knowledge_rating.to_i, sentiment_rating.to_i, total.to_i]
+				fields = [date, csv_obj['technology'], csv_obj['category'], csv_obj['parent'], adoption_rating.to_i, knowledge_rating.to_i, sentiment_rating.to_i, "newsworthiness", total.to_i]
 				history << fields
 				latest << fields
 			end
@@ -249,5 +259,5 @@ end
 
 
 data = Datahandler.new()
-#data.fetch_metrics_data()
-data.rate_metrics_data()
+data.fetch_metrics_data()
+#data.rate_metrics_data()

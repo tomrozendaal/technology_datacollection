@@ -7,6 +7,7 @@ require 'rexml/document'
 class LinkedinAPI
 	def initialize(tech_name)
 		@tech_name = tech_name
+		puts @tech_name
         @client = LinkedIn::Client.new(LINKEDIN_APIKEY, LINKEDIN_SECRETKEY)
 		rtoken = @client.request_token.token
 		rsecret = @client.request_token.secret
@@ -16,7 +17,6 @@ class LinkedinAPI
 
 	def get_people_amount()
 		json_data = @client.search({:keywords => @tech_name, :facet => "industry,4"}, "people")
-
 		json_object = JSON.parse(json_data)
 		return json_object["numResults"]
 	end
