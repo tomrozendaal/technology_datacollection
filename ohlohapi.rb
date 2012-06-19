@@ -8,7 +8,17 @@ require 'variables.rb'
 
 class OhlohAPI
 	def initialize(tech_name)
-		@tech_name = tech_name
+		case tech_name
+		when 'ruby-on-rails'
+			@tech_name = 'rails'
+		when 'zend-framework'
+			@tech_name = 'zend_framework'
+		when 'concrete5'
+			@tech_name = 'concretecms'
+		else
+			@tech_name = tech_name
+		end
+
 		uri = URI("http://www.ohloh.net/p/#{@tech_name}.xml?api_key=#{OHLOH_APIKEY}")
 		xml_data = Net::HTTP.get(uri) 
 		@doc = REXML::Document.new(xml_data)

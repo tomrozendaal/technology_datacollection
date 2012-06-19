@@ -11,23 +11,17 @@ class Indeed
 
 	def get_resumes()
 		url = "http://www.indeed.com/resumes?q=#{CGI.escape(@tech)}&co=US&rb=jtid%3A1288"
-		puts url
 		
 		doc = Nokogiri::HTML(open(url))
-		content = ""
+		resumes = ""
 		doc.search('div#result_count').each do |link|
-			content = link.content
-			content.slice! " resumes"
-			if content.include?(",")
-				content.slice! ","
+			resumes = link.content
+			resumes.slice! " resumes"
+			if resumes.include?(",")
+				resumes.slice! ","
 			end
 		end
-		resumes = Integer content
 		return resumes
 	end
 		
 end
-
-
-test = Indeed.new("c#")
-puts test.get_resumes()
