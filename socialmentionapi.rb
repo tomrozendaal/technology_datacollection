@@ -69,7 +69,7 @@ class SocialmentionAPI
 				ratio =  "0"
 			end
 		end
-		#puts "ratio: #{ratio} positive: #{positive} neutral: #{neutral} negative: #{negative}"
+		puts "ratio: #{ratio} positive: #{positive} neutral: #{neutral} negative: #{negative}"
 
 		#end_time = Time.now
 		#puts "Time elapsed #{(end_time - beginning_time)} seconds"
@@ -77,7 +77,4 @@ class SocialmentionAPI
 		return ratio
 	end
 end
-
-test = SocialmentionAPI.new('python')
-puts test.positive_ratio()
 

@@ -9,13 +9,22 @@ require 'stringio'
 
 class StackoverflowAPI
 	def initialize(tech_name)
-		@tech_name = tech_name
 		@baseurl = "http://api.stackexchange.com/2.0"
+		
+		case tech_name
+		when 'play'
+			@tech_name = 'playframework'
+		when 'hippo'
+			@tech_name = 'hippocms'
+		else
+			@tech_name = tech_name
+		end
+
 		if @tech_name.include? ' '
 			@tagged_tech_name = @tech_name.gsub!(' ','-')
 		else
 			@tagged_tech_name = @tech_name
-		end		
+		end	
 	end
 
 	def get_unanswered_questions_amount()
@@ -44,7 +53,13 @@ class StackoverflowAPI
 		total_questions = get_total_questions_amount().to_f
 		unanswered_questions = get_unanswered_questions_amount().to_f
 
-		answered_percentage = (total_questions - unanswered_questions) / total_questions * 100
-		return answered_percentage.round
+		if total_questions > 0
+			answered_percentage = (total_questions - unanswered_questions) / total_questions * 100
+			return answered_percentage.round
+		else
+			return 0
+		end
 	end
 end
+
+

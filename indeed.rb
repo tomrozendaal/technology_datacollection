@@ -16,9 +16,18 @@ class Indeed
 		resumes = ""
 		doc.search('div#result_count').each do |link|
 			resumes = link.content
-			resumes.slice! " resumes"
+			if resumes.include?("resumes")
+				resumes.slice! " resumes"
+			elsif resumes.include?("resume")
+				resumes.slice! " resume"
+			end
+			
 			if resumes.include?(",")
 				resumes.slice! ","
+			end
+
+			if resumes = ""
+				resumes = "0"
 			end
 		end
 		return resumes

@@ -7,7 +7,6 @@ require 'rexml/document'
 class LinkedinAPI
 	def initialize(tech_name)
 		@tech_name = tech_name
-		puts @tech_name
         @client = LinkedIn::Client.new(LINKEDIN_APIKEY, LINKEDIN_SECRETKEY)
 		rtoken = @client.request_token.token
 		rsecret = @client.request_token.secret

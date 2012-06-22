@@ -15,6 +15,12 @@ class OhlohAPI
 			@tech_name = 'zend_framework'
 		when 'concrete5'
 			@tech_name = 'concretecms'
+		when 'tapestry'
+			@tech_name = '4017'
+		when 'play'
+			@tech_name = 'playframework'
+		when 'hippo'
+			@tech_name = 'hippocms7'
 		else
 			@tech_name = tech_name
 		end
@@ -59,3 +65,4 @@ class OhlohAPI
 	end
 
 end
+
