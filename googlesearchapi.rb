@@ -6,8 +6,9 @@ require 'uri'
 require 'cgi'
 
 class GoogleSearchAPI
-	def initialize(tech_name)
+	def initialize(tech_name, category)
 		@tech_name = tech_name
+		@category = category
 		@baseurl =  "www.googleapis.com"
 	end
 
@@ -26,7 +27,12 @@ class GoogleSearchAPI
 	end
 
 	def get_newsworthiness_results()
-		search_query = "\"#{@tech_name} programming\""
+		if @category == "cms"
+			search_query = "\"#{@tech_name} cms\""
+		else
+			search_query = "\"#{@tech_name} programming\""
+		end
+		
 		requestpath = "/customsearch/v1?key=#{GOOGLESEARCH_APIKEY}&cx=#{GOOGLESEARCH_CX}&num=1&q=#{CGI.escape(search_query)}&dateRestrict=m1"
 		http = Net::HTTP.new(@baseurl, 443)
 		http.use_ssl = true

@@ -35,7 +35,7 @@ class Datahandler
 
 		@categories = ['pl','wf','cms']
 
-		@metrics_headers = ["date", "technology", "category", "parent", "amazon_books", "people_amount", "job_amount", "positive_ratio", "learning_materials", "answered_percentage", "age", "description", "logo", "latest_commits", "newsworthiness"]
+		@metrics_headers = ["date", "technology", "category", "parent", "amazon_books", "people_amount", "job_amount", "positive_ratio", "positive_messages", "neutral_messages", "negative_messages", "learning_materials", "answered_percentage", "age", "description", "logo", "latest_commits", "newsworthiness"]
 		@aspect_headers = ["date", "technology", "category", "parent", "adoption", "knowledge", "sentiment", "newsworthiness", "evolution", "total"]		
 	end
 
@@ -69,11 +69,14 @@ class Datahandler
 
 			# Socialmention API
 			socialmention = SocialmentionAPI.new(row)
-			positive_ratio = socialmention.positive_ratio();
+			positive_ratio = socialmention.positive_ratio()
+			positive_mes = socialmention.get_positive()
+			neutral_mes = socialmention.get_neutral()
+			negative_mes = socialmention.get_negative()
 			puts "#{row} positive_ratio: #{positive_ratio}"
 
 			# Google Search API
-			googlesearch = GoogleSearchAPI.new(row)
+			googlesearch = GoogleSearchAPI.new(row, category)
 			learning_materials = googlesearch.get_learningmaterial_results()
 			newsworthiness = googlesearch.get_newsworthiness_results()
 			puts "#{row} learning_materials: #{learning_materials}"
@@ -95,7 +98,7 @@ class Datahandler
 			date = "#{t.month}/#{t.year}"
 
 			# Save to CSV
-			fields = [date, row, category, parent, book_amount, people_amount, job_amount, positive_ratio, learning_materials, answered_percentage, age, desc, logo, latest_commits, newsworthiness]
+			fields = [date, row, category, parent, book_amount, people_amount, job_amount, positive_ratio, positive_mes, neutral_mes, negative_mes, learning_materials, answered_percentage, age, desc, logo, latest_commits, newsworthiness]
 			history << fields
 			latest << fields
 

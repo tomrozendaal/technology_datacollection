@@ -8,6 +8,9 @@ MAX_ATTEMPTS = 10
 class SocialmentionAPI
 	def initialize(tech_name)
 		@tech_name = tech_name
+		@positive = 0
+		@neutral = 0
+		@negative = 0
 	end
 
 	def positive_ratio()
@@ -69,6 +72,9 @@ class SocialmentionAPI
 				ratio =  "0"
 			end
 		end
+		@positive = positive
+		@neutral = neutral
+		@negative = negative
 		puts "ratio: #{ratio} positive: #{positive} neutral: #{neutral} negative: #{negative}"
 
 		#end_time = Time.now
@@ -76,5 +82,18 @@ class SocialmentionAPI
 
 		return ratio
 	end
+
+	def get_positive()
+		return @positive
+	end
+
+	def get_negative()
+		return @negative
+	end
+
+	def get_neutral()
+		return @neutral
+	end
 end
+
 

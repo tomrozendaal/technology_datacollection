@@ -26,7 +26,7 @@ class Indeed
 				resumes.slice! ","
 			end
 
-			if resumes = ""
+			if resumes == ""
 				resumes = "0"
 			end
 		end
